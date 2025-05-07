@@ -102,23 +102,23 @@ async function seedRevenue() {
   return insertedRevenue;
 }
 
-export async function GET() {
-  try {
-    console.log('Seeding users...');
-    await seedUsers();
+// export async function GET() {
+//   try {
+//     console.log('Seeding users...');
+//     await seedUsers();
 
-    console.log('Seeding customers...');
-    await seedCustomers();
+//     console.log('Seeding customers...');
+//     await seedCustomers();
 
-    console.log('Seeding invoices...');
-    await seedInvoices();
+//     console.log('Seeding invoices...');
+//     await seedInvoices();
 
-    console.log('Seeding revenue...');
-    await seedRevenue();
+//     console.log('Seeding revenue...');
+//     await seedRevenue();
 
-    return NextResponse.json({ message: 'Database seeded successfully' });
-  } catch (error) {
-    console.error('Error during database seeding:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-}
+//     return NextResponse.json({ message: 'Database seeded successfully' });
+//   } catch (error) {
+//     console.error('Error during database seeding:', error);
+//     return NextResponse.json({ error: error.message }, { status: 500 });
+//   }
+// }
