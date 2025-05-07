@@ -1,6 +1,7 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import postgres from 'postgres';
 import { invoices, customers, revenue, users } from '../lib/placeholder-data';
+import { NextResponse } from 'next/server';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -103,15 +104,21 @@ async function seedRevenue() {
 
 export async function GET() {
   try {
-    const result = await sql.begin((sql) => [
-      seedUsers(),
-      seedCustomers(),
-      seedInvoices(),
-      seedRevenue(),
-    ]);
+    console.log('Seeding users...');
+    await seedUsers();
 
-    return Response.json({ message: 'Database seeded successfully' });
+    console.log('Seeding customers...');
+    await seedCustomers();
+
+    console.log('Seeding invoices...');
+    await seedInvoices();
+
+    console.log('Seeding revenue...');
+    await seedRevenue();
+
+    return NextResponse.json({ message: 'Database seeded successfully' });
   } catch (error) {
-    return Response.json({ error }, { status: 500 });
+    console.error('Error during database seeding:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
